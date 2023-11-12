@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+body {
+  background-image: linear-gradient(
+    to right bottom,
+    #266cb2,
+    #748cc5,
+    #a8b0d7,
+    #d6d6eb,
+    #ffffff
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.formIzin .form-control,
+.formIzin .form-select,
+.formIzin .form-select option {
+  border: 1px solid #fff;
+  background-color: transparent;
+}
+
+.formIzin .form-label,
+.formIzin .form-select {
+  color: #fff;
+}
+
+.modalIzin p {
+  font-size: 20px;
+}
+
+.customDataTable .p-datatable-tbody tr {
+  border-bottom: 1px solid #ddd;
+  height: 60px;
+}
+.customDataTable .p-paginator {
+  margin-top: 20px;
+}
+
+.customDataTable .p-paginator .p-paginator-current {
+  margin-right: 20px;
+  color: #a9a9a9;
+}
+
+.customDataTable .p-paginator .p-paginator-prev {
+  color: #a9a9a9;
+}
+.customDataTable .p-paginator .p-paginator-next {
+  color: #a9a9a9;
+}
+.customDataTable .p-paginator .p-paginator-pages .p-paginator-page {
+  color: #a9a9a9;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.admin-bg {
+  background-color: #ffffff;
+}
+
+.admin-sidebar {
+  background-image: linear-gradient(173deg, #266cb2 -1.11%, #8caed1 111.38%);
+}
