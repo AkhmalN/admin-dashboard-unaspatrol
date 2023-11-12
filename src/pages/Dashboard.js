@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import "../../utils/css/sb-admin-2.min.css";
+import "../utils/css/sb-admin-2.min.css";
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { DataTable } from "primereact/datatable";
@@ -100,14 +100,14 @@ const Dashboard = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Earnings (Monthly)
+                            Data Users
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            $40,000
+                            60
                           </div>
                         </div>
                         <div className="col-auto">
-                          <i className="fas fa-calendar fa-2x text-gray-300" />
+                          <i className="fas fa-users fa-2x text-gray-300" />
                         </div>
                       </div>
                     </div>
@@ -119,14 +119,14 @@ const Dashboard = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Earnings (Annual)
+                            Data Patroli (Weekly)
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            $215,000
+                            300
                           </div>
                         </div>
                         <div className="col-auto">
-                          <i className="fas fa-dollar-sign fa-2x text-gray-300" />
+                          <i className="fas fa-user-shield fa-2x text-gray-300" />
                         </div>
                       </div>
                     </div>
@@ -138,15 +138,15 @@ const Dashboard = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Tasks
+                            Data Absensi (annual)
                           </div>
                           <div className="row no-gutters align-items-center">
                             <div className="col-auto">
                               <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                50%
+                                100
                               </div>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                               <div className="progress progress-sm mr-2">
                                 <div
                                   className="progress-bar bg-info"
@@ -157,7 +157,7 @@ const Dashboard = () => {
                                   aria-valuemax={100}
                                 />
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                         <div className="col-auto">

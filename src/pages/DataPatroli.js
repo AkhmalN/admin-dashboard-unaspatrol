@@ -1,12 +1,12 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import DATA from "../DATA";
-import "../../App.css";
-import { Button } from "react-bootstrap";
-function Presensi() {
+import "../App.css";
+import { Button, Row } from "react-bootstrap";
+function DataPatroli() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -21,9 +21,9 @@ function Presensi() {
           <div className="card-header py-3 d-flex  justify-content-between">
             <div className="">
               <h5 className="m-0 font-weight-bold text-primary">
-                Daftar Pengajuan Izin
+                Daftar DataPatroli Izin
               </h5>
-              <h5 className="m-0 font-weight-bold">SEAMEO QITEP IN LANGUAGE</h5>
+              <h5 className="m-0 font-weight-bold">seameo</h5>
             </div>
             <form className="d-sm-inline-block form-inline mr-0 mw-100 navbar-search">
               <div className="input-group">
@@ -45,6 +45,13 @@ function Presensi() {
 
           {/* Card Body */}
           <div className="card-body">
+            <div className="card-body d-flex justify-content-end">
+              <Row className="">
+                <Button className="btn btn-primary">
+                  <i className="fas fa-download"></i> Export
+                </Button>
+              </Row>
+            </div>
             <DataTable
               value={DATA}
               paginator
@@ -83,4 +90,4 @@ function Presensi() {
   );
 }
 
-export default Presensi;
+export default DataPatroli;
