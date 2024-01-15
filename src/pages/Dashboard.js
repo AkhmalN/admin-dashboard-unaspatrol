@@ -6,11 +6,18 @@ import { Dropdown } from "react-bootstrap";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import DATA from "../DATA";
+import axios from "axios";
 const Dashboard = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
+  };
+
+  const getData = async () => {
+    try {
+      const response = await axios.get("");
+    } catch (error) {}
   };
 
   return (
@@ -187,55 +194,13 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className=" w-100">
-                <div className="card shadow mb-4">
-                  {/* Card Header - Dropdown */}
-                  <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 className="m-0 font-weight-bold text-primary">
-                      Data Mahasiswa
-                    </h6>
-                  </div>
-                  <div className="card-body">
-                    <DataTable
-                      value={DATA}
-                      paginator
-                      rows={10}
-                      rowsPerPageOptions={[5, 10, 25, 50]}
-                      tableStyle={{ minWidth: "50rem" }}
-                      className="customDataTable" // Add a custom class for more styling options
-                      paginatorTemplate={`CurrentPageReport PrevPageLink PageLinks NextPageLink `}
-                    >
-                      <Column
-                        field="ID"
-                        header="ID"
-                        style={{ width: "10%" }}
-                      ></Column>
-                      <Column
-                        field="Nama"
-                        header="Nama"
-                        style={{ width: "25%" }}
-                      ></Column>
-                      <Column
-                        field="Divisi"
-                        header="Divisi"
-                        style={{ width: "30%" }}
-                      ></Column>
-                      <Column
-                        field="Asal Kampus"
-                        header="Asal Kampus"
-                        style={{ width: "35%" }}
-                      ></Column>
-                    </DataTable>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           {/* Footer */}
           <footer className="sticky-footer bg-white">
             <div className="container my-auto">
               <div className="copyright text-center my-auto">
-                <span>Copyright © MSIB Batch 5 SEAQIL 2023</span>
+                <span>Copyright © Admin Unas 2023</span>
               </div>
             </div>
           </footer>

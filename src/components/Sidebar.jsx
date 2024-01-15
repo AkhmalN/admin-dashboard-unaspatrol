@@ -60,6 +60,19 @@ const Sidebar = () => {
       </li>
       <li className="nav-item">
         <Link
+          to="/dashboard/data_patroli"
+          className="nav-link collapsed"
+          href="#"
+          // data-toggle="collapse"
+          data-target="#collapseUtilities"
+          aria-expanded="true"
+          aria-controls="collapseUtilities"
+        >
+          <i class="fas fa-user-shield"></i> <span>Data Patroli</span>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link
           to="/dashboard/users"
           className="nav-link collapsed"
           href="#"

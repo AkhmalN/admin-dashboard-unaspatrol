@@ -1,13 +1,30 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import DATA from "../DATA";
 import "../App.css";
 import { Button, Row } from "react-bootstrap";
+import axios from "axios";
 function DataUser() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(
+        "http://192.168.192.180:8083/api/users/"
+      );
+      setDataUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -57,7 +74,7 @@ function DataUser() {
               </Row>
             </div>
             <DataTable
-              value={DATA}
+              value={dataUser}
               paginator
               rows={10}
               rowsPerPageOptions={[5, 10, 25, 50]}
@@ -65,27 +82,31 @@ function DataUser() {
               className="customDataTable" // Add a custom class for more styling options
               paginatorTemplate={`CurrentPageReport PrevPageLink PageLinks NextPageLink `}
             >
-              <Column field="ID" header="ID" style={{ width: "10%" }}></Column>
               <Column
-                field="Nama"
+                field="images"
+                header="Profil"
+                style={{ width: "25%" }}
+              ></Column>
+              <Column
+                field="_id"
+                header="ID"
+                style={{ width: "10%", marginRight: 10 }}
+              ></Column>
+              <Column
+                field="username"
                 header="Nama"
                 style={{ width: "25%" }}
               ></Column>
               <Column
-                field="Divisi"
-                header="Divisi"
+                field="email"
+                header="Email"
                 style={{ width: "25%" }}
               ></Column>
               <Column
-                field="Asal Kampus"
-                header="Asal Kampus"
-                style={{ width: "30%" }}
+                field="role"
+                header="Akses"
+                style={{ width: "25%" }}
               ></Column>
-              <Column field="Status" header="status" style={{ width: "10%" }}>
-                <div>
-                  <Button variant="dark" />
-                </div>
-              </Column>
             </DataTable>
           </div>
         </div>

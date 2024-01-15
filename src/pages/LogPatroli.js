@@ -1,23 +1,15 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 import Sidebar from "../components/Sidebar";
+import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import axios from "axios";
 import "../App.css";
-import { Button, Col, Row, Modal } from "react-bootstrap";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-
-function DataPatroli() {
+import { Button, Col, Row } from "react-bootstrap";
+function LogPatroli() {
   // const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [dataPatroli, setDataPatroli] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  // const [modalCoordinates, setModalCoordinates] = useState([
-  //   "unknow place",
-  //   0,
-  //   0,
-  // ]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -33,10 +25,9 @@ function DataPatroli() {
     try {
       const response = await axios.get(
         // "http://192.168.192.180:8083/api/patrol/"
-        "http://192.168.192.180:8083/api/patrol/"
-        // "http://192.168.100.123:8083/api/patrol/"
+        "http://192.168.1.40:8083/api/v1/patrol/"
       );
-      console.log(response.data);
+      // console.log(response.data);
       setDataPatroli(response.data);
     } catch (error) {
       if (error.response) {
@@ -53,14 +44,6 @@ function DataPatroli() {
   useEffect(() => {
     getPatrolData();
   }, []);
-
-  // const handleOpenModal = (coordinates) => {
-  //   setModalCoordinates(coordinates);
-  //   setShowModal(true);
-  // };
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
   return (
     <div id="wrapper">
       <Sidebar />
@@ -122,83 +105,23 @@ function DataPatroli() {
               <Column field="username" header="Petugas"></Column>
               <Column field="location" header="Lokasi"></Column>
               <Column field="status" header="status"></Column>
-              {/* <Column
-                field="image"
-                header="Dokumentasi"
-                body={(dataPatroli) => (
-                  <>
-                    {dataPatroli.image && dataPatroli.images.length > 0 ? (
-                      dataPatroli.image.map((images, index) => (
-                        <img
-                          key={index}
-                          src={images}
-                          alt={`Image ${index}`}
-                          style={{ width: "50px", height: "50px" }}
-                        />
-                      ))
-                    ) : (
-                      <span>No images</span>
-                    )}
-                  </>
-                )}
-              ></Column> */}
+              <Column
+                field="location"
+                header="Koordinat"
+                body={(rowData) => `${rowData.latitude} , ${rowData.longitude}`}
+              ></Column>
               <Column field="notes" header="catatan"></Column>
               <Column
                 field="image"
                 header="Dokumentasi"
                 body={(rowData) => <img src={rowData.image} />}
               ></Column>
-              <Column
-                field="status" // assuming status is a field in your data
-                header="Status"
-                body={(rowData) => (
-                  <span>
-                    Latitude: {rowData.latitude}, Longitude: {rowData.longitude}
-                    , Status: {rowData.status}
-                  </span>
-                )}
-              />
             </DataTable>
           </div>
-          {/* <Modal show={showModal} onHide={handleCloseModal} size="lg">
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <Row>
-                  <Col className="mx-2">
-                    <span className="fs-6">Label : {modalCoordinates[0]}</span>
-                  </Col>
-                  <Col className="mx-2">
-                    <span className="fs-6">Lat : {modalCoordinates[1]}</span>
-                  </Col>
-                  <Col className="mx-2">
-                    <span className="fs-6">Lng : {modalCoordinates[2]}</span>
-                  </Col>
-                </Row>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <MapContainer
-                center={[modalCoordinates[1], modalCoordinates[2]]}
-                zoom={13}
-                style={{ height: "400px", width: "100%" }}
-              >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={[modalCoordinates[1], modalCoordinates[2]]}>
-                  {console.log(modalCoordinates)}
-                  <Popup>{modalCoordinates[0]}</Popup>
-                </Marker>
-              </MapContainer>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal> */}
         </div>
       </div>
     </div>
   );
 }
 
-export default DataPatroli;
+export default LogPatroli;
