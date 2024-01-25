@@ -15,7 +15,7 @@ const Sidebar = () => {
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink" />
         </div>
-        <div className="sidebar-brand-text ml-2">E-Smart patrol</div>
+        <div className="sidebar-brand-text ml-2">Toko Manuk</div>
       </Link>
       {/* Divider */}
       <hr className="sidebar-divider my-0" />
@@ -41,49 +41,23 @@ const Sidebar = () => {
           aria-expanded="true"
           aria-controls="collapseTwo"
         >
-          <i class="fas fa-clipboard"></i> <span>Data Absensi</span>
-        </Link>
-      </li>
-      {/* Nav Item - Utilities Collapse Menu */}
-      <li className="nav-item">
-        <Link
-          to="/dashboard/patroli"
-          className="nav-link collapsed"
-          href="#"
-          // data-toggle="collapse"
-          data-target="#collapseUtilities"
-          aria-expanded="true"
-          aria-controls="collapseUtilities"
-        >
-          <i class="fas fa-user-shield"></i> <span>Data Log Patroli</span>
+          <i class="fas fa-clipboard"></i> <span>Daftar Toko</span>
         </Link>
       </li>
       <li className="nav-item">
         <Link
-          to="/dashboard/data_patroli"
+          to="/map"
           className="nav-link collapsed"
           href="#"
           // data-toggle="collapse"
-          data-target="#collapseUtilities"
+          data-target="#collapseTwo"
           aria-expanded="true"
-          aria-controls="collapseUtilities"
+          aria-controls="collapseTwo"
         >
-          <i class="fas fa-user-shield"></i> <span>Data Patroli</span>
+          <i class="fas fa-clipboard"></i> <span>Pencarian Toko</span>
         </Link>
       </li>
-      <li className="nav-item">
-        <Link
-          to="/dashboard/users"
-          className="nav-link collapsed"
-          href="#"
-          // data-toggle="collapse"
-          data-target="#collapseUtilities"
-          aria-expanded="true"
-          aria-controls="collapseUtilities"
-        >
-          <i class="far fa-user"></i> <span>Data User</span>
-        </Link>
-      </li>
+
       <hr className="sidebar-divider d-none d-md-block" />
       {/* Sidebar Toggler (Sidebar) */}
       <div className="text-center d-none d-md-inline">

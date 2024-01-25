@@ -55,12 +55,8 @@ const Dashboard = () => {
                   <Dropdown show={isDropdownOpen} onToggle={toggleDropdown}>
                     <Dropdown.Toggle variant="white">
                       <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                        Testing Doang
+                        Admin 1
                       </span>
-                      <img
-                        className="img-profile rounded-circle"
-                        src="img/undraw_profile.svg"
-                      />
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-right shadow animated--grow-in">
                       <Dropdown.Item href="#">
@@ -126,7 +122,7 @@ const Dashboard = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Data Patroli (Weekly)
+                            Data Patroli
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
                             300
@@ -145,7 +141,7 @@ const Dashboard = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Data Absensi (annual)
+                            Data Absensi
                           </div>
                           <div className="row no-gutters align-items-center">
                             <div className="col-auto">
@@ -180,7 +176,7 @@ const Dashboard = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Requests
+                            Data Aktivitas
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
                             18

@@ -27,7 +27,7 @@ function LogPatroli() {
         // "http://192.168.192.180:8083/api/patrol/"
         "http://192.168.1.40:8083/api/v1/patrol/"
       );
-      // console.log(response.data);
+      console.log(response.data);
       setDataPatroli(response.data);
     } catch (error) {
       if (error.response) {
