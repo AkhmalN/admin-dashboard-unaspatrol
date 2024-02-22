@@ -15,7 +15,7 @@ const Sidebar = () => {
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink" />
         </div>
-        <div className="sidebar-brand-text ml-2">E-Smart patrol</div>
+        <div className="sidebar-brand-text ml-2">Toko Manuk</div>
       </Link>
       {/* Divider */}
       <hr className="sidebar-divider my-0" />
@@ -41,6 +41,7 @@ const Sidebar = () => {
           aria-expanded="true"
           aria-controls="collapseTwo"
         >
+<<<<<<< HEAD
           <i className="fas fa-clipboard"></i> <span>Data Absensi</span>
         </Link>
       </li>
@@ -56,18 +57,22 @@ const Sidebar = () => {
           aria-controls="collapseUtilities"
         >
           <i class="fas fa-user-shield"></i> <span>Data Log Patroli</span>
+=======
+          <i class="fas fa-clipboard"></i> <span>Daftar Toko</span>
+>>>>>>> 62a8f9d6a9aa750ff1f3e9e1be5cd7032766d67e
         </Link>
       </li> */}
       <li className="nav-item">
         <Link
-          to="/dashboard/data_patroli"
+          to="/map"
           className="nav-link collapsed"
           href="#"
           // data-toggle="collapse"
-          data-target="#collapseUtilities"
+          data-target="#collapseTwo"
           aria-expanded="true"
-          aria-controls="collapseUtilities"
+          aria-controls="collapseTwo"
         >
+<<<<<<< HEAD
           <i className="fas fa-user-shield"></i> <span>Data Patroli</span>
         </Link>
       </li>
@@ -95,8 +100,12 @@ const Sidebar = () => {
           aria-controls="collapseUtilities"
         >
           <i className="fas fa-user-shield"></i> <span>Data Aktivitas</span>
+=======
+          <i class="fas fa-clipboard"></i> <span>Pencarian Toko</span>
+>>>>>>> 62a8f9d6a9aa750ff1f3e9e1be5cd7032766d67e
         </Link>
       </li>
+
       <hr className="sidebar-divider d-none d-md-block" />
       {/* Sidebar Toggler (Sidebar) */}
       <div className="text-center d-none d-md-inline">
