@@ -6,46 +6,31 @@ import { Column } from "primereact/column";
 import axios from "axios";
 import "../App.css";
 import { Button, Col, Row } from "react-bootstrap";
-import { DateFormat } from "../utils/DateFormat";
 import { Modal } from "react-bootstrap";
 import Maps from "./Maps";
-import { FaMapMarked } from "react-icons/fa";
 
-function DataPatroli() {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [dataPatroli, setDataPatroli] = useState([]);
+function DataAktivitas() {
+  const [dataAktivitas, setDataAktivitas] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [error, setError] = useState("");
   const [selectedLatitude, setSelectedLatitude] = useState([]);
   const [selectedLongitude, setSelectedLongitude] = useState([]);
-  const [selectedLabel, setSelectedLabel] = useState([]);
 
-  useEffect(() => {
-    const updateTime = () => {
-      setCurrentTime(new Date());
-    };
-    const intervalId = setInterval(updateTime, 1000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
   const openModalCoordinate = (rowData) => {
     setSelectedLatitude(rowData.latitude);
     setSelectedLongitude(rowData.longitude);
-    setSelectedLabel(rowData.location);
-
     setOpenModal(true);
   };
   const closeModalCoordinate = () => {
     setOpenModal(false);
   };
 
-  const getPatrolData = async () => {
+  const getAktivitasData = async () => {
     try {
       axios
-        .get("https://server-smartpatrol.vercel.app/api/v1/patrol/")
+        .get("https://server-smartpatrol.vercel.app/api/v1/aktivitas/")
         .then((response) => {
-          setDataPatroli(response.data.patrols);
+          setDataAktivitas(response.data.aktivitas);
         })
         .catch((error) => {
           setError(error);
@@ -54,7 +39,7 @@ function DataPatroli() {
   };
 
   useEffect(() => {
-    getPatrolData();
+    getAktivitasData();
   }, []);
   return (
     <div id="wrapper">
@@ -65,19 +50,9 @@ function DataPatroli() {
           <div className="card-header py-3 d-flex  justify-content-between">
             <div className="">
               <h5 className="m-0 font-weight-bold text-primary">
-                Data Patroli
+                Data Aktivitas
               </h5>
               <p>{error}</p>
-              <Row>
-                <Row>
-                  <h5 className="w-full my-2 font-weight-bold">
-                    {DateFormat(new Date())}
-                  </h5>
-                </Row>
-                <Row>
-                  <h5 className="my-2">{currentTime.toLocaleTimeString()}</h5>
-                </Row>
-              </Row>
             </div>
             <form className="d-sm-inline-block form-inline mr-0 mw-100 navbar-search">
               <div className="input-group">
@@ -101,32 +76,23 @@ function DataPatroli() {
             onHide={closeModalCoordinate}
             animation="slide"
           >
-            <Modal.Header closeButton>Pos : {selectedLabel}</Modal.Header>
+            <Modal.Header closeButton></Modal.Header>
 
             <Modal.Body>
-              <Maps
-                latitude={selectedLatitude}
-                longitude={selectedLongitude}
-                location={selectedLabel}
-              />
+              <Maps latitude={selectedLatitude} longitude={selectedLongitude} />
             </Modal.Body>
           </Modal>
           {/* Card Body */}
           <div className="card-body">
             <div className="card-body d-flex justify-content-end">
-              <Row className="mr-4">
-                <Button className="btn btn-danger">
-                  <span>Hapus</span> <i className="fas fa-user-minus"></i>
-                </Button>
-              </Row>
               <Row className="">
-                <Button className="btn btn-primary">
-                  <span>Cetak</span> <i className="fas fa-download"></i>
+                <Button className="btn btn-success">
+                  <i className="fas fa-download"></i> Export
                 </Button>
               </Row>
             </div>
             <DataTable
-              value={dataPatroli}
+              value={dataAktivitas}
               paginator
               rows={10}
               rowsPerPageOptions={[5, 10, 25, 50]}
@@ -152,27 +118,23 @@ function DataPatroli() {
               <Column
                 field="notes"
                 header="catatan"
-                style={{ width: "25%" }}
+                style={{ width: "15%" }}
               ></Column>
               <Column
                 field="coordinat" // assuming status is a field in your data
                 header="coordinat"
                 body={(rowData) => (
                   <span onClick={() => openModalCoordinate(rowData)}>
-                    <FaMapMarked size={40} color="#D24545" />
+                    {rowData.latitude}, {rowData.longitude}
                   </span>
                 )}
-                style={{ width: "10%", cursor: "pointer", textAlign: "center" }}
+                style={{ width: "25%" }}
               />
               <Column
-                field="Tanggal"
-                header="Tanggal"
-                body={(rowData) => {
-                  const createdAt = DateFormat(rowData.createdAt);
-                  return createdAt;
-                }}
-                style={{ width: "30%" }}
-                sortable
+                field="Status"
+                header="status"
+                body={(rowData) => <span>{rowData.status}</span>}
+                style={{ width: "25%" }}
               ></Column>
               <Column
                 field="image"
@@ -204,4 +166,4 @@ function DataPatroli() {
   );
 }
 
-export default DataPatroli;
+export default DataAktivitas;

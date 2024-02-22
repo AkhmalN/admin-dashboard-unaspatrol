@@ -41,11 +41,11 @@ const Sidebar = () => {
           aria-expanded="true"
           aria-controls="collapseTwo"
         >
-          <i class="fas fa-clipboard"></i> <span>Data Absensi</span>
+          <i className="fas fa-clipboard"></i> <span>Data Absensi</span>
         </Link>
       </li>
       {/* Nav Item - Utilities Collapse Menu */}
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <Link
           to="/dashboard/patroli"
           className="nav-link collapsed"
@@ -57,7 +57,7 @@ const Sidebar = () => {
         >
           <i class="fas fa-user-shield"></i> <span>Data Log Patroli</span>
         </Link>
-      </li>
+      </li> */}
       <li className="nav-item">
         <Link
           to="/dashboard/data_patroli"
@@ -68,7 +68,7 @@ const Sidebar = () => {
           aria-expanded="true"
           aria-controls="collapseUtilities"
         >
-          <i class="fas fa-user-shield"></i> <span>Data Patroli</span>
+          <i className="fas fa-user-shield"></i> <span>Data Patroli</span>
         </Link>
       </li>
       <li className="nav-item">
@@ -81,7 +81,20 @@ const Sidebar = () => {
           aria-expanded="true"
           aria-controls="collapseUtilities"
         >
-          <i class="far fa-user"></i> <span>Data User</span>
+          <i className="far fa-user"></i> <span>Data User</span>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link
+          to="/dashboard/aktivitas"
+          className="nav-link collapsed"
+          href="#"
+          // data-toggle="collapse"
+          data-target="#collapseUtilities"
+          aria-expanded="true"
+          aria-controls="collapseUtilities"
+        >
+          <i className="fas fa-user-shield"></i> <span>Data Aktivitas</span>
         </Link>
       </li>
       <hr className="sidebar-divider d-none d-md-block" />
