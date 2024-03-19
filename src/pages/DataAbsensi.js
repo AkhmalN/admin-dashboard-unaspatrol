@@ -147,7 +147,7 @@ function DataAbsensi() {
                 body={(rowData) => (
                   <img
                     key={rowData._id}
-                    src={`http://192.168.100.123:8083/absensi/${rowData.image.replace(
+                    src={`http://192.168.162.180:8083/absensi/${rowData.image.replace(
                       "public\\absensi\\",
                       ""
                     )}`}

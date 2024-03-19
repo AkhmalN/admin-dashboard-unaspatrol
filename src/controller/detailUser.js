@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "../App.css";
+import { getUserDetail } from "../api/users";
+import { useEffect } from "react";
+import axios from "axios";
+import { DateFormat } from "../utils/DateFormat";
 
-export const ModalAdd = ({ openModal, handleCloseModal }) => {
+export const ModalDetail = ({ openModal, handleCloseDetail, userDetail }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPasword] = useState("");
@@ -13,15 +17,29 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
   const [tanggalLahir, setTanggalLahir] = useState("");
   const [domisili, setDomisili] = useState("");
   const [unitKerja, setUnitKerja] = useState("");
+  const [dataDetail, setDataDetail] = useState([]);
+
+  const handleGetDetail = async () => {
+    try {
+      const response = await getUserDetail(userDetail);
+      setDataDetail(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetDetail();
+  });
 
   return (
     <div
       className="modal show"
       style={{ display: "block", position: "initial" }}
     >
-      <Modal show={openModal} onHide={handleCloseModal} size="lg">
+      <Modal show={openModal} onHide={handleCloseDetail} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Form Tambah User</Modal.Title>
+          <Modal.Title>Detail Username : {dataDetail.username}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row">
@@ -31,6 +49,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="username"
                   onChange={(e) => setUsername(e.target.value)}
+                  placeholder={dataDetail.username}
                 />
               </Form.Group>
             </div>
@@ -40,6 +59,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder={dataDetail.email}
                 />
               </Form.Group>
             </div>
@@ -51,6 +71,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="password"
                   onChange={(e) => setPasword(e.target.value)}
+                  placeholder={dataDetail.password}
                 />
               </Form.Group>
             </div>
@@ -60,6 +81,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Select
                   value={unitKerja}
                   onChange={(e) => setUnitKerja(e.target.value)}
+                  placeholder={dataDetail.unit_kerja}
                 >
                   <option disabled>Pilih Unit Bekerja</option>
                   <option value="Unas Pejanten">Unas Pejanten</option>
@@ -76,6 +98,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="text"
                   onChange={(e) => setNik(e.target.value)}
+                  placeholder={dataDetail.nik}
                 />
               </Form.Group>
             </div>
@@ -85,6 +108,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="text"
                   onChange={(e) => setTempatLahir(e.target.value)}
+                  placeholder={dataDetail.tempat_lahir}
                 />
               </Form.Group>
             </div>
@@ -94,6 +118,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="date"
                   onChange={(e) => setTanggalLahir(e.target.value)}
+                  placeholder={dataDetail.tanggal_lahir}
                 />
               </Form.Group>
             </div>
@@ -101,10 +126,11 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
           <div className="row">
             <div className="col-md-4">
               <Form.Group className="mb-3">
-                <Form.Label>Role : </Form.Label>
+                <Form.Label>Role saat ini ({dataDetail.role}): </Form.Label>
                 <Form.Select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
+                  placeholder={dataDetail.role}
                 >
                   <option disabled>Pilih Role</option>
                   <option value="Admin">Admin</option>
@@ -120,6 +146,7 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="number"
                   onChange={(e) => setNohp(e.target.value)}
+                  placeholder={dataDetail.no_hp}
                 />
               </Form.Group>
             </div>
@@ -129,16 +156,17 @@ export const ModalAdd = ({ openModal, handleCloseModal }) => {
                 <Form.Control
                   type="text"
                   onChange={(e) => setDomisili(e.target.value)}
+                  placeholder={dataDetail.domisili}
                 />
               </Form.Group>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseModal}>
+          <Button variant="primary" onClick={handleCloseDetail}>
             Simpan
           </Button>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={handleCloseDetail}>
             Tutup
           </Button>
         </Modal.Footer>

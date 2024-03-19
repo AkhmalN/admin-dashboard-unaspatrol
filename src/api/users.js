@@ -3,7 +3,9 @@ import { baseUrl } from "./apiConfig";
 
 export const getUsers = async () => {
   try {
-    const response = await axios.get(`${baseUrl}/users`);
+    const response = await axios.get(
+      `https://server-smartpatrol.vercel.app/api/v1/users/`
+    );
     return response.data.users;
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -16,14 +18,12 @@ export const getUsers = async () => {
 
 export const getUserDetail = async (userId) => {
   try {
-    const response = await axios.get(`${baseUrl}/users/${userId}`);
-    console.log(response.data);
+    const response = await axios.get(
+      `http://192.168.100.123:8083/api/v1/users/${userId}`
+    );
+    return response.data.user;
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      throw new Error("Data tidak ditemukan");
-    } else {
-      throw new Error("Terjadi kesalahan saat mengambil data absen");
-    }
+    console.error(error);
   }
 };
 

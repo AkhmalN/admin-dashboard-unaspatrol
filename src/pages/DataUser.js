@@ -7,11 +7,18 @@ import { Button, Row } from "react-bootstrap";
 import { getUsers } from "../api/users";
 import { DateFormat } from "../utils/DateFormat";
 import { ModalAdd } from "../controller/addUser";
+import CheckboxColumn from "../components/CheckBoxColumn";
+import { ModalDetail } from "../controller/detailUser";
 
 function DataUser() {
   const [dataUser, setDataUser] = useState([]);
+  const [userDetail, setUserDetail] = useState("");
   const [error, setError] = useState("");
   const [modalAdd, setModalAdd] = useState(false);
+  const [modalDetail, setModalDetail] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedDetail, setSelectedDetail] = useState(false);
+  const [selectedDelete, setSelectedDelete] = useState(false);
 
   const getUserData = async () => {
     try {
@@ -30,6 +37,14 @@ function DataUser() {
   };
   const handleCloseModal = () => {
     setModalAdd(false);
+  };
+
+  const handleCloseDetail = () => {
+    setModalDetail(false);
+  };
+  const handleDetailClick = (event) => {
+    setUserDetail(event.data._id);
+    setModalDetail(!modalDetail);
   };
 
   return (
@@ -62,17 +77,35 @@ function DataUser() {
 
           {/* MODAL */}
           <ModalAdd openModal={modalAdd} handleCloseModal={handleCloseModal} />
+          {userDetail && (
+            <ModalDetail
+              openModal={modalDetail}
+              handleCloseDetail={handleCloseDetail}
+              userDetail={userDetail}
+            />
+          )}
 
           {/* Card Body */}
           <div className="card-body">
             <div className="card-body d-flex justify-content-end">
+              <Row className="mr-4">
+                <Button
+                  className="btn btn-warning"
+                  onClick={() => setSelectedDetail(!selectedDetail)}
+                >
+                  <span>Detail</span> <i className="fas fa-eye"></i>
+                </Button>
+              </Row>
               <Row className="mr-4">
                 <Button className="btn btn-success" onClick={handleOpenModal}>
                   <span>Tambah</span> <i className="fas fa-user-plus"></i>
                 </Button>
               </Row>
               <Row className="mr-4">
-                <Button className="btn btn-danger">
+                <Button
+                  className="btn btn-danger"
+                  onClick={() => setSelectedDelete(!selectedDelete)}
+                >
                   <span>Hapus</span> <i className="fas fa-user-minus"></i>
                 </Button>
               </Row>
@@ -84,38 +117,38 @@ function DataUser() {
             </div>
             <DataTable
               value={dataUser}
+              selection={selectedRows}
+              onSelectionChange={(e) => setSelectedRows(e.value)}
+              sortMode="multiple"
               paginator
               rows={10}
               rowsPerPageOptions={[5, 10, 20, 50]}
               tableStyle={{ minWidth: "50rem" }}
               className="customDataTable" // Add a custom class for more styling options
               paginatorTemplate={`CurrentPageReport PrevPageLink PageLinks NextPageLink `}
+              resizableColumns
+              reorderableColumns
+              columnResizeMode="expand"
+              style={{ width: "calc(100% - 10px)" }}
+              onRowClick={handleDetailClick}
             >
-              <Column
-                field="username"
-                header="Nama"
-                style={{ width: "15%" }}
-              ></Column>
-              <Column
-                field="email"
-                header="Email"
-                style={{ width: "25%" }}
-              ></Column>
-              <Column
-                field="password"
-                header="Password"
-                style={{ width: "20%" }}
-              ></Column>
-              <Column
-                field="createdAt"
-                body={(rowData) => {
-                  const createdAt = DateFormat(rowData.createdAt);
-                  return createdAt;
-                }}
-                header="Dibuat pada"
-                style={{ width: "20%" }}
-                sortable
-              ></Column>
+              {selectedDelete && (
+                <Column
+                  headerStyle={{ width: "3em" }}
+                  body={(rowData) => (
+                    <CheckboxColumn
+                      rowData={rowData}
+                      selectedRows={selectedRows}
+                      setSelectedRows={setSelectedRows}
+                    />
+                  )}
+                />
+              )}
+              <Column field="username" header="Nama" />
+              <Column field="email" header="Email" />
+              <Column field="password" header="Password" />
+              <Column field="nik" header="NIK" sortable />
+              <Column field="unit_kerja" header="Unit Kerja" />
               <Column
                 field="updatedAt"
                 body={(rowData) => {
@@ -123,9 +156,8 @@ function DataUser() {
                   return createdAt;
                 }}
                 header="Diupdate pada"
-                style={{ width: "20%" }}
                 sortable
-              ></Column>
+              />
             </DataTable>
           </div>
         </div>

@@ -6,7 +6,7 @@ const iconPerson = L.icon({
   iconUrl: require("../assets/marker.png"), // Gunakan ikon dari react-icons/fa
   iconAnchor: [30, 75], // Atur titik tengah ikon marker
   popupAnchor: [0, -50], // Atur titik untuk menampilkan popup
-  iconSize: [60, 60],
+  iconSize: [80, 80],
 });
 
 export { iconPerson };

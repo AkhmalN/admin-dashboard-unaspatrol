@@ -4,17 +4,14 @@ import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { iconPerson } from "../service/icon";
 
-export default function Maps({ latitude, longitude, location }) {
+export default function Maps({ latitude, longitude, location, height, width }) {
   return (
     <MapContainer
       center={[latitude, longitude]}
       zoom={40}
-      style={{ height: "400px", width: "100%" }}
+      style={{ height: height, width: width }}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />{" "}
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />{" "}
       <Marker position={[latitude, longitude]} icon={iconPerson}>
         <Popup>Lokasi Pos : {location}</Popup>
       </Marker>

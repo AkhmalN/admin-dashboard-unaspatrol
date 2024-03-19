@@ -51,14 +51,7 @@ const Dashboard = () => {
                         <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400" />
                         Profile
                       </Dropdown.Item>
-                      <Dropdown.Item href="#">
-                        <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" />
-                        Settings
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#">
-                        <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400" />
-                        Activity Log
-                      </Dropdown.Item>
+
                       <Dropdown.Divider />
                       <Dropdown.Item
                         href="#"

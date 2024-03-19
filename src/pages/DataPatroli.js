@@ -3,21 +3,25 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import axios from "axios";
 import "../App.css";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import { DateFormat } from "../utils/DateFormat";
-import { Modal } from "react-bootstrap";
 import Maps from "./Maps";
 import { FaMapMarked } from "react-icons/fa";
+import { getPatrol } from "../api/patrol";
+import { imageUrl } from "../api/apiConfig";
+import CoordinateModal from "../components/CoordinateModal";
+import ImageModal from "../components/ImageModal";
 
 function DataPatroli() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [dataPatroli, setDataPatroli] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [error, setError] = useState("");
+  const [modalCoordinate, setModalCoordinate] = useState(false);
   const [selectedLatitude, setSelectedLatitude] = useState([]);
   const [selectedLongitude, setSelectedLongitude] = useState([]);
+  const [modalImage, setModalImage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState([]);
+  const [error, setError] = useState("");
   const [selectedLabel, setSelectedLabel] = useState([]);
 
   useEffect(() => {
@@ -29,28 +33,38 @@ function DataPatroli() {
       clearInterval(intervalId);
     };
   }, []);
+
   const openModalCoordinate = (rowData) => {
     setSelectedLatitude(rowData.latitude);
     setSelectedLongitude(rowData.longitude);
     setSelectedLabel(rowData.location);
 
-    setOpenModal(true);
+    setModalCoordinate(true);
   };
   const closeModalCoordinate = () => {
-    setOpenModal(false);
+    setModalCoordinate(false);
+  };
+  const openModalImage = (rowData) => {
+    const image = `http://192.168.100.123:8083/patroli/${rowData.image.replace(
+      "public\\patroli\\",
+      ""
+    )}`;
+
+    setSelectedImage(image);
+    setModalImage(true);
+  };
+  const closeModalImage = () => {
+    setModalImage(false);
   };
 
   const getPatrolData = async () => {
     try {
-      axios
-        .get("https://server-smartpatrol.vercel.app/api/v1/patrol/")
-        .then((response) => {
-          setDataPatroli(response.data.patrols);
-        })
-        .catch((error) => {
-          setError(error);
-        });
-    } catch (error) {}
+      const response = await getPatrol();
+      setDataPatroli(response);
+      console.log(response);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   useEffect(() => {
@@ -67,7 +81,6 @@ function DataPatroli() {
               <h5 className="m-0 font-weight-bold text-primary">
                 Data Patroli
               </h5>
-              <p>{error}</p>
               <Row>
                 <Row>
                   <h5 className="w-full my-2 font-weight-bold">
@@ -96,21 +109,18 @@ function DataPatroli() {
               </div>
             </form>
           </div>
-          <Modal
-            show={openModal}
+          <CoordinateModal
+            show={modalCoordinate}
             onHide={closeModalCoordinate}
-            animation="slide"
-          >
-            <Modal.Header closeButton>Pos : {selectedLabel}</Modal.Header>
-
-            <Modal.Body>
-              <Maps
-                latitude={selectedLatitude}
-                longitude={selectedLongitude}
-                location={selectedLabel}
-              />
-            </Modal.Body>
-          </Modal>
+            latitude={selectedLatitude}
+            longitude={selectedLongitude}
+            location={selectedLabel}
+          />
+          <ImageModal
+            show={modalImage}
+            onHide={closeModalImage}
+            image={selectedImage}
+          />
           {/* Card Body */}
           <div className="card-body">
             <div className="card-body d-flex justify-content-end">
@@ -147,22 +157,57 @@ function DataPatroli() {
               <Column
                 field="status"
                 header="status"
-                style={{ width: "10%" }}
-              ></Column>
-              <Column
-                field="notes"
-                header="catatan"
-                style={{ width: "25%" }}
+                style={{ width: "15%" }}
+                body={(rowData) => {
+                  let bgColor;
+                  switch (rowData.status) {
+                    case "Aman":
+                      bgColor = "green";
+                      break;
+                    case "Demonstrasi":
+                      bgColor = "blue";
+                      break;
+                    case "Kebakaran":
+                      bgColor = "red";
+                      break;
+                    case "Pencurian":
+                      bgColor = "orange";
+                      break;
+                    default:
+                      bgColor = "black";
+                      break;
+                  }
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: bgColor,
+                        textAlign: "center",
+                        borderRadius: 10,
+                        paddingLeft: 5,
+                        paddingRight: 5,
+                        paddingTop: 2,
+                      }}
+                    >
+                      <p style={{ color: "#FFF", marginTop: 5 }}>
+                        {rowData.status}
+                      </p>
+                    </div>
+                  );
+                }}
               ></Column>
               <Column
                 field="coordinat" // assuming status is a field in your data
                 header="coordinat"
+                alignHeader={"center"}
                 body={(rowData) => (
-                  <span onClick={() => openModalCoordinate(rowData)}>
+                  <span
+                    onClick={() => openModalCoordinate(rowData)}
+                    style={{ padding: 5 }}
+                  >
                     <FaMapMarked size={40} color="#D24545" />
                   </span>
                 )}
-                style={{ width: "10%", cursor: "pointer", textAlign: "center" }}
+                style={{ width: "20%", cursor: "pointer", textAlign: "center" }}
               />
               <Column
                 field="Tanggal"
@@ -171,7 +216,7 @@ function DataPatroli() {
                   const createdAt = DateFormat(rowData.createdAt);
                   return createdAt;
                 }}
-                style={{ width: "30%" }}
+                style={{ width: "25%" }}
                 sortable
               ></Column>
               <Column
@@ -179,6 +224,7 @@ function DataPatroli() {
                 header="Dokumentasi"
                 body={(rowData) => (
                   <img
+                    onClick={() => openModalImage(rowData)}
                     key={rowData._id}
                     src={`http://192.168.100.123:8083/patroli/${rowData.image.replace(
                       "public\\patroli\\",
@@ -186,7 +232,7 @@ function DataPatroli() {
                     )}`}
                     alt={`Dokumentasi Absen ${rowData.image}`}
                     style={{
-                      width: 60,
+                      width: 100,
                       height: 60,
                     }}
                     onError={(e) => {
@@ -194,7 +240,12 @@ function DataPatroli() {
                     }}
                   />
                 )}
-                style={{ width: "25%" }}
+                style={{
+                  width: "10%",
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
               />
             </DataTable>
           </div>
